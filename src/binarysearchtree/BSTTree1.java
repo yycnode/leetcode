@@ -95,4 +95,28 @@ public class BSTTree1 {
         return p.value;
     }
 
+    /**
+     * <h3>存储关键字和对应值</h3>
+     *
+     * @param key   关键字
+     * @param value 值
+     */
+    public void put(int key, Object value) {
+        root = doPut(root, key, value);
+    }
+
+    private BSTNode doPut(BSTNode node, int key, Object value) {
+        if (node == null) {
+            return new BSTNode(key, value);
+        }
+        if (key < node.key) {
+            node.left = doPut(node.left, key, value);
+        } else if (node.key < key) {
+            node.right = doPut(node.right, key, value);
+        } else {
+            node.value = value;
+        }
+        return node;
+    }
+
 }
