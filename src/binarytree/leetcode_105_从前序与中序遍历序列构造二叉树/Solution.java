@@ -4,7 +4,7 @@ import binarytree.TreeNode;
 
 import java.util.Arrays;
 
-class Solution {
+public class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder.length == 0 || inorder.length == 0) {
             return null;
