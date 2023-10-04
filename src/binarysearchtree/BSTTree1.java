@@ -30,26 +30,69 @@ public class BSTTree1 {
         }
     }
 
-    BSTNode root;
+    BSTNode root; // 根节点
 
+    /**
+     * <h3>查找关键字对应的值</h3>
+     *
+     * @param key 关键字
+     * @return 关键字对应的值
+     */
     public Object get(int key) {
-
-        BSTNode p = root;
-        while (p != null) {
-            /*
-                result = -1 key < p.key
-                result = 0 key == p.key
-                result = 1 key > p.key
-             */
-            int result = key - p.key;
-            if (result < 0) {
-                p = p.left;
-            } else if (result > 0) {
-                p = p.right;
+        BSTNode node = root;
+        while (node != null) {
+            if (key < node.key) {
+                node = node.left;
+            } else if (node.key < key) {
+                node = node.right;
             } else {
-                return p.value;
+                return node.value;
             }
         }
         return null;
     }
+
+    /**
+     * <h3>查找最小关键字对应的值</h3>
+     *
+     * @return 关键字对应的值
+     */
+    public Object min() {
+        if (root == null) {
+            return null;
+        }
+        BSTNode p = root;
+        while (p.left != null){
+            p = p.left;
+        }
+        return p.value;
+        /*return doMin(root); // 递归 */
+    }
+
+    public Object doMin(BSTNode node) {
+        if (node == null) {
+            return null;
+        }
+        if (node.left == null) {
+            return node.value;
+        }
+        return doMin(node.left);
+    }
+
+    /**
+     * <h3>查找最大关键字对应的值</h3>
+     *
+     * @return 关键字对应的值
+     */
+    public Object max() {
+        if (root == null) {
+            return null;
+        }
+        BSTNode p = root;
+        while (p.right != null){
+            p = p.right;
+        }
+        return p.value;
+    }
+
 }
