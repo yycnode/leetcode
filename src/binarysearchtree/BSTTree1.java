@@ -1,5 +1,7 @@
 package binarysearchtree;
 
+import java.util.ArrayList;
+
 /**
  * @Author: yangyuecheng
  * @CreateTime: 2023-10-04 17:42
@@ -192,5 +194,111 @@ public class BSTTree1 {
         // 情况2：节点没有右子树，若离它最近的、自右而来的祖先就是后任
         return ancestorFromRight != null ?
                 ancestorFromRight.value : null;
+    }
+
+    /**
+     * 删除节点
+     *
+     * @param key 关键字
+     * @return 被删除的元素值
+     */
+    public Object remove(int key) {
+        BSTNode p = root;
+        BSTNode parent = null;
+        while (p != null) {
+            if (key < p.key) {
+                parent = p;
+                p = p.left;
+            } else if (key > p.key) {
+                parent = p;
+                p = p.right;
+            } else {
+                break;
+            }
+        }
+        if (p == null) {
+            return null;
+        }
+        // 删除
+        if (p.left == null) {
+            shift(parent, p, p.right);
+        } else if (p.right == null) {
+            shift(parent, p, p.left);
+        } else {
+            // 情况4
+            // 4.1 被删除节点找后继
+            BSTNode s = p.right;
+            BSTNode sParent = p; // 后继父亲
+            while (s.left != null) {
+                sParent = s;
+                s = s.left;
+            }
+            // 后继节点即为 s
+            if (sParent != p) { // 不相邻
+                // 4.2 删除和后继不相邻, 处理后继的后事
+                shift(sParent, s, s.right); // 不可能有左孩子
+                s.right = p.right;
+            }
+            // 4.3 后继取代被删除节点
+            shift(parent, p, s);
+            s.left = p.left;
+        }
+        return p.value;
+    }
+
+    public Object delete(int key) {
+        ArrayList<Object> result = new ArrayList<>();
+        root = doDelete(root, key, result);
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    /**
+     * 托孤
+     *
+     * @param parent  被删除节点的父亲
+     * @param deleted 被删除的节点
+     * @param child   被顶上去的节点
+     */
+    private void shift(BSTNode parent, BSTNode deleted, BSTNode child) {
+        if (parent == null) {
+            root = child;
+        } else if (deleted == parent.left) {
+            parent.left = child;
+        } else {
+            parent.right = child;
+        }
+    }
+
+    /**
+     * @param node 起点
+     * @param key  要删除的元素
+     * @return {@link BSTNode} 删剩下的孩子
+     */
+    private BSTNode doDelete(BSTNode node, int key, ArrayList<Object> result) {
+        if (node == null) {
+            return null;
+        }
+        if (key < node.key) {
+            node.left = doDelete(node.left, key, result);
+            return node;
+        }
+        if (node.key < key) {
+            node.right = doDelete(node.right, key, result);
+            return node;
+        }
+        result.add(node.value);
+        if (node.left == null) { // 情况1 - 只有右孩子
+            return node.right;
+        }
+        if (node.right == null) { // 情况2 - 只有左孩子
+            return node.left;
+        }
+        BSTNode s = node.right; // 情况3 - 有两个孩子
+        while (s.left != null) {
+            s = s.left;
+        }
+        s.right = doDelete(node.right, s.key, new ArrayList<>());
+        s.left = node.left;
+        return s;
     }
 }
