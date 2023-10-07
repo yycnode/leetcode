@@ -1,6 +1,8 @@
 package binarysearchtree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @Author: yangyuecheng
@@ -300,5 +302,74 @@ public class BSTTree1 {
         s.right = doDelete(node.right, s.key, new ArrayList<>());
         s.left = node.left;
         return s;
+    }
+
+    public List<Object> less(int key) {
+        ArrayList<Object> result = new ArrayList<>();
+        BSTNode p = root;
+        LinkedList<BSTNode> stack = new LinkedList<>();
+        while (p != null || !stack.isEmpty()) {
+            if (p != null) {
+                stack.push(p);
+                p = p.left;
+            } else {
+                BSTNode pop = stack.pop();
+                //处理值
+                if (pop.key < key) {
+                    result.add(pop.value);
+                } else {
+                    break;
+                }
+                p = pop.right;
+            }
+        }
+        return result;
+    }
+
+    // 找 > key 的所有 value 反向中序遍历
+    public List<Object> greater(int key) {
+
+        ArrayList<Object> result = new ArrayList<>();
+        BSTNode p = root;
+        LinkedList<BSTNode> stack = new LinkedList<>();
+        while (p != null || !stack.isEmpty()) {
+            if (p != null) {
+                stack.push(p);
+                p = p.right;
+            } else {
+                BSTNode pop = stack.pop();
+                // 处理值
+                if (pop.key > key) {
+                    result.add(pop.value);
+                } else {
+                    break;
+                }
+                p = pop.left;
+            }
+        }
+        return result;
+    }
+
+    // 找 >= key1 且 <= key2 的所有值
+    public List<Object> between(int key1, int key2) {
+        ArrayList<Object> result = new ArrayList<>();
+        BSTNode p = root;
+        LinkedList<BSTNode> stack = new LinkedList<>();
+        while (p != null || !stack.isEmpty()) {
+            if (p != null) {
+                stack.push(p);
+                p = p.left;
+            } else {
+                BSTNode pop = stack.pop();
+                // 处理值
+                if (pop.key >= key1 && pop.key <= key2) {
+                    result.add(pop.value);
+                } else if (pop.key > key2) {
+                    break;
+                }
+                p = pop.right;
+            }
+        }
+        return result;
     }
 }
