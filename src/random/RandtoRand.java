@@ -8,26 +8,6 @@ package random;
 public class RandtoRand {
 
 
-    public static void main(String[] args) {
-        int count = 0;
-        int testTimes = 10000;
-        for (int i = 0; i < testTimes; i++) {
-            if (f2() == 0) {
-                count++;
-            }
-        }
-        System.out.println((double) count / (double) testTimes);
-        System.out.println("=========================");
-        int[] counts = new int[8];
-        for (int i = 0; i < testTimes; i++) {
-            int num = g();
-            counts[num]++;
-        }
-        for (int i = 0; i < 8; i++) {
-            System.out.println(i + "这个数，出现了" + counts[i] + " 次");
-        }
-    }
-
     // 1 - 5 的随机数
     public static int f() {
         return (int) (Math.random() * 5) + 1;
@@ -81,6 +61,58 @@ public class RandtoRand {
             ans = x();
         } while (ans == x());
         return ans;
+    }
+
+    /**
+     * 返回随机数组
+     * @param maxLen
+     * @param maxValue
+     * @return
+     */
+    public static int[] lenRandomValueRandom(int maxLen, int maxValue){
+        int len = (int) (Math.random() * maxLen);
+        int[] ans = new int[len];
+        for (int i = 0; i < len; i++){
+            ans[i] = (int)(Math.random() * maxValue);
+        }
+        return ans;
+    }
+
+    public static int[] copyArray(int[] arr){
+        int[] ans = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            ans[i] = arr[i];
+        }
+        return ans;
+    }
+
+    public static boolean equalValues(int[] arr1, int[] arr2){
+        for (int i = 0; i < arr1.length; i++){
+            if (arr1[i] != arr2[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        int count = 0;
+        int testTimes = 10000;
+        for (int i = 0; i < testTimes; i++) {
+            if (f2() == 0) {
+                count++;
+            }
+        }
+        System.out.println((double) count / (double) testTimes);
+        System.out.println("=========================");
+        int[] counts = new int[8];
+        for (int i = 0; i < testTimes; i++) {
+            int num = g();
+            counts[num]++;
+        }
+        for (int i = 0; i < 8; i++) {
+            System.out.println(i + "这个数，出现了" + counts[i] + " 次");
+        }
     }
 
 }
