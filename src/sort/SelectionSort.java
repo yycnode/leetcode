@@ -1,6 +1,6 @@
 package sort;
 
-import java.util.Arrays;
+import static random.RandomArray.*;
 
 /**
  * @Author: yangyuecheng
@@ -33,10 +33,21 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-        int[] nums = {2, 7, 4, 3, 6, 1, 8, 5};
-        System.out.println(Arrays.toString(nums));
-        sort(nums);
-        System.out.println(Arrays.toString(nums));
+        int maxLen = 50;
+        int maxValue = 100;
+        int testTimes = 10000;
+        for (int i = 0; i < testTimes; i++) {
+            int[] arr1 = lenRandomValueRandom(maxLen, maxValue);
+            int[] arr2 = copyArray(arr1);
+            SelectionSort.sort(arr1);
+            InsertionSort.sort(arr2);
+            if (!isSorted(arr1)) {
+                System.out.println("选择排序错误");
+            }
+            if (!isSorted(arr2)) {
+                System.out.println("插入排序错误");
+            }
+        }
     }
 
 }
