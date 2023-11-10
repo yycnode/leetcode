@@ -22,7 +22,8 @@ public class Solution {
     输出：
     [null, 1, -1, -3]
      */
-    int[] sums;
+    int[] sums; // 前缀和数组
+
     public NumArray(int[] nums) {
         int n = nums.length;
         sums = new int[n + 1];
