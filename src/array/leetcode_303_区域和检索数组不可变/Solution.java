@@ -24,7 +24,7 @@ public class Solution {
      */
     int[] sums; // 前缀和数组
 
-    public NumArray(int[] nums) {
+    public void NumArray(int[] nums) {
         int n = nums.length;
         sums = new int[n + 1];
         for (int i = 0; i < n; i++) {
