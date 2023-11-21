@@ -30,10 +30,7 @@ public class Solution {
             }
             i += 2;
         }
-        if ((n - ans) % 2 == 1) {
-            ans += 1;
-        }
-        return ans;
+        return (n - ans) % 2 == 1 ? ans + 1 : ans;
     }
 
 }
